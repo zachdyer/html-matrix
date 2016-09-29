@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Matrix Code Rain</title>
+        <style>
+            *{margin:0; padding:0; }
+            body{background:black;}
+        </style>
+    </head>
+    <body>
+        <canvas id="c"></canvas>
+        <script type="text/javascript">
+            var canvas = document.getElementById("c");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.background = "black";
+            var c = canvas.getContext("2d");
+			c.fillStyle="lime";
+            var code = ["<html>","<p>","<b>","<strong>","<head>","<body>","<a>","<i>","<div>","<form>","<ol>","<li>","<ul>","<pre>","<nav>","<footer>","<header>","<article>","<section>","<em>","<style>","<title>","<meta>","<br>","<table>","<input>"];
+			var rain = [ ];
+			var max = 40;
+			for(var i = 0; i < max; i++){
+				var drop =  {};
+				drop.code = Math.floor(Math.random() * code.length);
+				drop.x = Math.random() * canvas.width;
+				drop.y = Math.random() * canvas.height;
+				drop.size = Math.random() * 160;
+				drop.speed = drop.size/4;
+				rain.push(drop);
+			}
+            setInterval(function(){
+				 c.clearRect(0,0,canvas.width,canvas.height);
+				 for(var i = 0; i < max; i++){
+					var drop = rain[i];
+					c.font = drop.size+"pt arial";
+					c.fillText(code[drop.code],drop.x,drop.y);
+					drop.y += drop.speed;
+					if(drop.y > canvas.height + drop.size) {
+						drop.x = Math.random() * canvas.width;
+						drop.y = 0;
+						drop.code = Math.floor(Math.random() * code.length);
+						drop.size = Math.random() * 40;
+						drop.speed = drop.size/4;
+					}
+				 }
+			},1000/60);
+        </script>
+    </body>
+</html>
